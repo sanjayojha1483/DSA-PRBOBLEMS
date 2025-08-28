@@ -1,0 +1,14 @@
+
+#include <iostream>
+using namespace std;
+class Node {
+    public:
+    int data ;
+    Node * next;
+};
+int main() {
+    Node * Head;
+    Head = new Node();
+    Head -> data = 4;
+    Head -> next = Null;
+}
