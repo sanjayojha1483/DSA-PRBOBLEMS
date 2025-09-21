@@ -1,5 +1,3 @@
-
-
 class Solution {
 public:
     string simplifyPath(string path) {
@@ -7,18 +5,16 @@ public:
         string ans, temp;
         stringstream ss(path);
 
-        // Split by '/'
         while (getline(ss, temp, '/')) {
             if (temp == "" || temp == ".") {
-                continue; // ignore empty and '.'
+                continue;
             } else if (temp == "..") {
-                if (!st.empty()) st.pop(); // go up one dir
+                if (!st.empty()) st.pop();
             } else {
-                st.push(temp); // valid folder name
+                st.push(temp);
             }
         }
 
-        // Build result
         while (!st.empty()) {
             ans = "/" + st.top() + ans;
             st.pop();
@@ -27,4 +23,3 @@ public:
         return ans.empty() ? "/" : ans;
     }
 };
-
