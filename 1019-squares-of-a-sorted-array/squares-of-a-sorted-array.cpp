@@ -1,26 +1,72 @@
 class Solution {
 public:
-    vector<int> sortedSquares(vector<int>& nums) {
-        int n =nums.size();
-        vector<int>ans(n);
-        int l = 0, r = n-1;
-        int pos = n-1;
+    vector<int> sortedSquares(vector<int>& a) {
+        int siz=a.size();
+        vector<int> neg;
+        vector<int> pos;
+        // int i;
+        for(int i=0;i<siz;i++)
+        {
+            if(a[i]<0)
+            neg.push_back(a[i]);
+            else
+            pos.push_back(a[i]);
 
-        while(l<=r){
-            int leftsquare = nums[l]*nums[l];
-            int rightsquare = nums[r]*nums[r];
-
-            if(leftsquare>rightsquare){
-                ans[pos] = leftsquare;
-                l++;
-            }
-            else{
-                ans[pos] = rightsquare;
-                r--;
-            }
-            pos--;
         }
-        return ans;
+        if(neg.size()==0) // no negative element
+        {
+            for(int i=0;i<pos.size();i++)
+            pos[i]=pos[i]*pos[i];
+            return pos;
+        }
+        if(pos.size()==0) // no positibve
+        {
+            for(int i=0;i<neg.size();i++)
+            neg[i]=neg[i]*neg[i];
+            reverse(neg.begin(),neg.end());
+            return neg;
+        }
+       
+        int i=0,j=0;
+        int id=0;
+        int n=neg.size();
+        int m=pos.size();
+        vector<int> res(n+m);
+        for(int i=0;i<n;i++)
+        neg[i]=neg[i]*neg[i];
 
+        reverse(neg.begin(),neg.end());
+        for(int i=0;i<m;i++)
+        pos[i]=pos[i]*pos[i];
+        while(i<n and j<m)
+        {
+            if(neg[i]<=pos[j])
+            {
+                res[id]=neg[i];
+                id++;
+                i++;
+            }
+            else
+            {
+                res[id]=pos[j];
+                id++;
+                j++;
+            }
+        } // whilwe loop khatam
+        while(i<n)
+        {
+            res[id]=neg[i];
+                id++;
+                i++;
+        }
+        while(j<m)
+        {
+            res[id]=pos[j];
+                id++;
+                j++;
+        }
+
+
+        return res;
     }
 };
