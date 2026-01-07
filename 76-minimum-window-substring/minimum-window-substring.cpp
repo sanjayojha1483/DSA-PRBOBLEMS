@@ -1,51 +1,49 @@
 class Solution {
 public:
-    string minWindow(string s, string t) {
-        if (t.size() > s.size()) return "";
-
-        int need[256] = {0};
-        int window[256] = {0};
-
-        // Step 1: Count needed characters
-        for (int i = 0; i < t.size(); i++) {
-            need[t[i]]++;
-        }
-
-        int have = 0;
-        int required = t.size();
-        int left = 0;
-        int minLen = INT_MAX;
-        int start = 0;
-
-        // Step 2: Sliding window on s
-        for (int right = 0; right < s.size(); right++) {
-            char c = s[right];
-            window[c]++;
-
-            // If this char was needed and still needed, we increase "have"
-            if (need[c] > 0 && window[c] <= need[c]) {
-                have++;
-            }
-
-            // When full match mil jaye
-            while (have == required) {
-                // Update answer
-                if (right - left + 1 < minLen) {
-                    minLen = right - left + 1;
-                    start = left;
-                }
-
-                // Window shrink from left
-                char leftChar = s[left];
-                window[leftChar]--;
-                if (need[leftChar] > 0 && window[leftChar] < need[leftChar]) {
-                    have--;
-                }
-                left++;
-            }
-        }
-
-        if (minLen == INT_MAX) return "";
-        return s.substr(start, minLen);
+   public:
+bool fun(vector<int> &have, vector<int> &need)
+{
+    for(int i=0;i<256;i++)
+    {
+        if(have[i]<need[i])
+        return false;
     }
+    return true;
+}
+    string minWindow(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<int> have(256,0);
+        vector<int> need(256,0);
+        int i;
+        if(n<m)
+        return "";
+        for(i=0;i<m;i++)
+        need[t[i]]++;
+
+        int low=0,high=0;
+        int res=INT_MAX;
+        int start=-1;
+        for(high=0;high<n;high++)
+        {
+            have[s[high]]++;
+
+            while(fun(have,need)) // jab tk sahi hai
+            {
+                int len=high-low+1;
+                if(res>len)
+                {
+                    res=len;
+                    start=low;
+                }
+                have[s[low]]--;
+                low++;
+            }
+        }
+        if(res==INT_MAX)
+        return "";
+        return s.substr(start,res);
+    }
+
+
 };
