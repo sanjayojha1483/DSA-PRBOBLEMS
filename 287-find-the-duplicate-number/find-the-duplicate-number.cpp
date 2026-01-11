@@ -1,21 +1,22 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        //phase 1 isme meeting point dekhenge 
-        int slow= nums[0];
-        int fast= nums[0];
-        do{
-            slow= nums[slow];
-            fast = nums[nums[fast]];
-        }while(slow!=fast);
-
-        //phase 2 now duplicate no. searching
-        int ptr1 = nums[0];
-        int ptr2 = slow;
-        while(ptr1!=ptr2){
-            ptr1 = nums[ptr1];
-            ptr2 = nums[ptr2];
+        int low = 1, high = nums.size() - 1;
+        
+        while(low < high) {
+            int mid = low + (high - low) / 2;
+            int count = 0;
+            
+            for(int num : nums) {
+                if(num <= mid) count++;
+            }
+            
+            if(count > mid)
+                high = mid;
+            else
+                low = mid + 1;
         }
-        return ptr1;
+        
+        return low;
     }
 };
