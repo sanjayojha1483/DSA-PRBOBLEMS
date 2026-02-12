@@ -5,23 +5,15 @@ public:
         if(nums.size() == 0)
             return 0;
 
-        int officer = 0;
-        int res = 1;
-        int cm = 1;
+        int officer = 0; // ye first se chalega 
 
-        while(cm < nums.size()) {
-
-            if(nums[cm] == nums[cm - 1]) {
-                cm++;
-                continue;
+        for(int cm = 1; cm < nums.size(); cm++) { //cm har index pr jayega
+            if(nums[cm] != nums[officer]) {
+                officer++;
+                nums[officer] = nums[cm];
             }
-
-            nums[officer + 1] = nums[cm];
-            officer++;
-            res++;
-            cm++;
         }
 
-        return res;
+        return officer + 1;
     }
 };
