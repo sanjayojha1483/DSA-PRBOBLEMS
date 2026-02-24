@@ -1,21 +1,40 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        int n=s.length();
-        string ans = "";
-        reverse(s.begin(),s.end());
-        for(int i=0; i<n; i++){
+        
+        vector<string> words;
+        int i = 0;
+        int n = s.length();
+        
+        while(i < n) {
+            
+            // Skip spaces
+            while(i < n && s[i] == ' ')
+                i++;
+            
             string word = "";
-            while(i<n && s[i] != ' '){
-                word+=s[i];
+            
+            // Extract word
+            while(i < n && s[i] != ' ') {
+                word += s[i];
                 i++;
             }
-            reverse(word.begin(),word.end());
-            if(word.length()>0)
-            {
-                ans +=" "+word;
-            }
+            
+            if(word.length() > 0)
+                words.push_back(word);
         }
-        return ans.substr(1);
+        
+        // Reverse words
+        reverse(words.begin(), words.end());
+        
+        // Join words with single space
+        string result = "";
+        for(int i = 0; i < words.size(); i++) {
+            result += words[i];
+            if(i != words.size() - 1)
+                result += " ";
+        }
+        
+        return result;
     }
 };
