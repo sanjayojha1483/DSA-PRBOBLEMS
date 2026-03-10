@@ -7,18 +7,25 @@ public:
         for(int i = 0; i < strs.size(); i++) {
 
             string word = strs[i];
-            string key = word;
 
-            sort(key.begin(), key.end());
+            vector<int> count(26,0);
+
+            for(int j = 0; j < word.size(); j++){
+                count[word[j] - 'a']++;
+            }
+
+            string key = "";
+
+            for(int k = 0; k < 26; k++){
+                key += to_string(count[k]) + "#";
+            }
 
             mp[key].push_back(word);
         }
 
         vector<vector<string>> ans;
 
-        unordered_map<string, vector<string>>::iterator it;
-
-        for(it = mp.begin(); it != mp.end(); it++) {
+        for(auto it = mp.begin(); it != mp.end(); it++){
             ans.push_back(it->second);
         }
 
